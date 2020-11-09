@@ -1,1 +1,1 @@
-# coffe-shop-system
+# Coffee Shop System
