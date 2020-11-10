@@ -1,25 +1,36 @@
 package com.coffee.shop.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Set;
 
 @Entity
 @Table(name = "coffee_order")
-public class CoffeeOrder {
+public class CoffeeOrder implements Serializable {
+
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-    @Column(name = "status")
-    private String status;
+    @OneToMany(mappedBy = "pk.coffeeOrder", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonProperty("items")
+    private Set<CoffeeOrderItem> coffeeOrderItems;
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
     @ManyToOne
     @JoinColumn(name = "shop_id")
     private Shop shop;
-    @OneToMany(mappedBy = "coffeeOrder")
-    private Set<CoffeeOrderItem> coffeeOrderItems;
+
+    public Status getStatus() {
+        return status;
+    }
 
     public Long getId() {
         return id;
@@ -29,12 +40,12 @@ public class CoffeeOrder {
         this.id = id;
     }
 
-    public String getStatus() {
-        return status;
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public enum Status {
+        PENDING, PROCESSED, CANCELED
     }
 
     public Customer getCustomer() {

@@ -1,29 +1,31 @@
 package com.coffee.shop.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 @Table(name = "coffee_order_item")
-public class CoffeeOrderItem {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+@AssociationOverrides({
+        @AssociationOverride(name = "pk.coffeeOrder", joinColumns = @JoinColumn(name = "coffee_order_id")),
+        @AssociationOverride(name = "pk.item", joinColumns = @JoinColumn(name = "item_id"))
+})
+public class CoffeeOrderItem implements Serializable {
+    @EmbeddedId
+    @JsonIgnore
+    private CoffeeOrderItemId pk = new CoffeeOrderItemId();
+
     @Column(name = "quantity")
     private int quantity;
-    @ManyToOne
-    @JoinColumn(name = "item_id")
-    private Item item;
-    @ManyToOne
-    @JoinColumn(name = "coffee_order_id")
-    private CoffeeOrder coffeeOrder;
 
-    public Long getId() {
-        return id;
+    public CoffeeOrderItemId getPk() {
+        return pk;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setPk(CoffeeOrderItemId pk) {
+        this.pk = pk;
     }
 
     public int getQuantity() {
@@ -34,19 +36,37 @@ public class CoffeeOrderItem {
         this.quantity = quantity;
     }
 
-    public Item getItem() {
-        return item;
-    }
-
-    public void setItem(Item item) {
-        this.item = item;
-    }
-
+    @Transient
+    @JsonIgnore
     public CoffeeOrder getCoffeeOrder() {
-        return coffeeOrder;
+        return pk.getCoffeeOrder();
     }
 
     public void setCoffeeOrder(CoffeeOrder coffeeOrder) {
-        this.coffeeOrder = coffeeOrder;
+        pk.setCoffeeOrder(coffeeOrder);
+    }
+
+    @Transient
+    public Item getItem() {
+        return pk.getItem();
+    }
+
+    public void setItem(Item item) {
+        pk.setItem(item);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CoffeeOrderItem that = (CoffeeOrderItem) o;
+        if (getPk() != null ? !getPk().equals(that.pk) : that.getPk() != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(pk);
     }
 }

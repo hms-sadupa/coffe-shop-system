@@ -1,7 +1,12 @@
 package com.coffee.shop.service;
 
-import org.springframework.transaction.annotation.Transactional;
+import com.coffee.shop.dto.OrderApiRequest;
+import com.coffee.shop.model.CoffeeOrder;
 
-@Transactional
-public class OrderService {
+public interface OrderService {
+    CoffeeOrder createOrder(OrderApiRequest orderApiRequest);
+
+    void cancelOrder(Long oderId);
+
+    CoffeeOrder getCoffeeOrder(Long orderId);
 }
