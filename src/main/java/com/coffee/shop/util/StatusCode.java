@@ -2,9 +2,9 @@ package com.coffee.shop.util;
 
 public enum StatusCode {
 
-    S100("Success"),
     E100("Invalid argument"),
-    E200("Data not found");
+    E200("Data not found"),
+    E300("Internal Error");
 
     private String description;
 
