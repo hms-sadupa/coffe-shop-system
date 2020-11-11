@@ -20,18 +20,6 @@
           "path": [
             "orders",
             "1"
-          ],
-          "query": [
-            {
-              "key": "id",
-              "value": "1",
-              "disabled": true
-            },
-            {
-              "key": "",
-              "value": "1",
-              "disabled": true
-            }
           ]
         }
       },
@@ -52,18 +40,6 @@
           "path": [
             "orders",
             "1"
-          ],
-          "query": [
-            {
-              "key": "shopId",
-              "value": "1",
-              "disabled": true
-            },
-            {
-              "key": "",
-              "value": "1",
-              "disabled": true
-            }
           ]
         }
       },
@@ -93,18 +69,6 @@
           "port": "8080",
           "path": [
             "orders"
-          ],
-          "query": [
-            {
-              "key": "shopId",
-              "value": "1",
-              "disabled": true
-            },
-            {
-              "key": "",
-              "value": "1",
-              "disabled": true
-            }
           ]
         }
       },
@@ -135,18 +99,6 @@
           "path": [
             "orders",
             "1"
-          ],
-          "query": [
-            {
-              "key": "shopId",
-              "value": "1",
-              "disabled": true
-            },
-            {
-              "key": "",
-              "value": "1",
-              "disabled": true
-            }
           ]
         }
       },
