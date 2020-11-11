@@ -2,8 +2,6 @@ package com.coffee.shop.dto;
 
 public class SuccessApiResponse implements ApiResponse {
 
-    private static final String DATA = "data";
-
     private Object data;
 
     public SuccessApiResponse(Object data) {

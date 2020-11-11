@@ -9,4 +9,6 @@ public interface OrderService {
     void cancelOrder(Long oderId);
 
     CoffeeOrder getCoffeeOrder(Long orderId);
+
+    CoffeeOrder updateOrder(Long orderId, OrderApiRequest orderApiRequest);
 }

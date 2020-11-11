@@ -46,15 +46,39 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public CoffeeOrder createOrder(OrderApiRequest orderApiRequest) {
 
-        if (orderApiRequest.getShopId() == null || orderApiRequest.getCustomerId() == null || orderApiRequest.getOrderItems() == null || orderApiRequest.getOrderItems().isEmpty()) {
-            logger.info("Missing required parameter");
-            throw new IllegalArgumentException("Missing required parameters");
-        }
         Shop shop = getShop(orderApiRequest.getShopId());
         Customer customer = getCustomer(orderApiRequest.getCustomerId());
 
         CoffeeOrder coffeeOrder = new CoffeeOrder();
         coffeeOrder.setStatus(CoffeeOrder.Status.PENDING);
+        coffeeOrder.setShop(shop);
+        coffeeOrder.setCustomer(customer);
+        Set<CoffeeOrderItem> orderItems = getCoffeeOrderItems(orderApiRequest.getOrderItems(), coffeeOrder);
+
+        coffeeOrder.setCoffeeOrderItems(orderItems);
+        orderRepository.save(coffeeOrder);
+
+        return coffeeOrder;
+    }
+
+    @Override
+    public CoffeeOrder updateOrder(Long orderId, OrderApiRequest orderApiRequest) {
+
+        if (orderId == null) {
+            logger.info("Missing order id");
+            throw new IllegalArgumentException("Missing order id");
+        }
+
+        Optional<CoffeeOrder> existingOrder = orderRepository.findById(orderId);
+        if (existingOrder.isEmpty()) {
+            logger.info("Invalid order id");
+            throw new IllegalArgumentException("Invalid order id");
+        }
+
+        Shop shop = getShop(orderApiRequest.getShopId());
+        Customer customer = getCustomer(orderApiRequest.getCustomerId());
+
+        CoffeeOrder coffeeOrder = existingOrder.get();
         coffeeOrder.setShop(shop);
         coffeeOrder.setCustomer(customer);
         Set<CoffeeOrderItem> orderItems = getCoffeeOrderItems(orderApiRequest.getOrderItems(), coffeeOrder);
@@ -106,6 +130,10 @@ public class OrderServiceImpl implements OrderService {
     }
 
     private Set<CoffeeOrderItem> getCoffeeOrderItems(Set<OrderItem> orderItems, CoffeeOrder coffeeOrder) {
+        if (orderItems == null || orderItems.isEmpty()) {
+            logger.info("Missing order items");
+            throw new IllegalArgumentException("Missing order items");
+        }
         Set<CoffeeOrderItem> coffeeOrderItems = new HashSet<>();
         for (OrderItem orderItem : orderItems) {
             Optional<Item> item = itemRepository.findById(orderItem.getItemId());

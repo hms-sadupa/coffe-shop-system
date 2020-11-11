@@ -42,6 +42,15 @@ public class OrderController {
         }
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<ApiResponse> updateOrder(@PathVariable Long id, @RequestBody OrderApiRequest orderApiRequest) {
+        try {
+            return ResponseEntity.ok().build();
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(new FailApiResponse(StatusCode.E100, e.getMessage()));
+        }
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> cancelOrder(@PathVariable long id) {
         try {
