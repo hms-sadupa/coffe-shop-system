@@ -1,0 +1,11 @@
+
+module my-runc2INIT 1.0;
+
+require {
+	type unlabeled_t;
+	type container_runtime_t;
+	class key create;
+}
+
+#============= container_runtime_t ==============
+allow container_runtime_t unlabeled_t:key create;

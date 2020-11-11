@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.coffee.shop</groupId>
-    <artifactId>api</artifactId>
+    <artifactId>coffee-shop-api</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>api</name>
     <description>Coffee Shop API</description>
