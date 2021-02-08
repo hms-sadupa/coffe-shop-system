@@ -9,7 +9,7 @@
     </parent>
     <groupId>com.coffee.shop</groupId>
     <artifactId>coffee-shop-api</artifactId>
-    <version>0.0.1-snapshot</version>
+    <version>0.0.1</version>
     <name>api</name>
     <description>Coffee Shop API</description>
 
@@ -67,6 +67,7 @@
         <url>http://github.com/hms-sadupa/coffee-shop-system.git</url>
         <connection>scm:git:ssh://git@github.com/hms-sadupa/coffee-shop-system.git</connection>
         <developerConnection>scm:git:ssh://git@github.com/hms-sadupa/coffee-shop-system.git</developerConnection>
-    </scm>
+      <tag>coffee-shop-api-0.0.1</tag>
+  </scm>
 
 </project>
